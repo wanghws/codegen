@@ -1,0 +1,26 @@
+package ${table.packages}.${table.varObjName}.bean;
+
+import com.bj58.wf.dal.annotation.Column;
+import com.bj58.wf.dal.annotation.Id;
+import com.bj58.wf.dal.annotation.Table;
+
+
+@Table("${table.tableName}")
+public class $table.objectName{
+
+	#foreach( $method in $table.methods )
+@Column("${method.column}")
+	private $method.type $method.propertie;
+	
+	#end
+
+	#foreach( $method in $table.methods )
+public void set${method.name}(${method.type} ${method.name}){
+		this.$method.name = $method.name
+	}
+	public $method.type get${method.name}(){
+		return this.$method.name
+	}
+	#end
+
+}

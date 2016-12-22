@@ -1,0 +1,33 @@
+package ${table.packages}.${table.lowTableName}.entity;
+
+import com.bj58.sfft.utility.dao.annotation.Column;
+import com.bj58.sfft.utility.dao.annotation.NotDBColumn;
+import com.bj58.sfft.utility.dao.annotation.Table;
+import com.bj58.sfft.utility.dao.annotation.Id;
+import com.bj58.spat.scf.serializer.component.annotation.SCFMember;
+import com.bj58.spat.scf.serializer.component.annotation.SCFSerializable;
+
+
+@Table(name = "${table.tableName}")
+@SCFSerializable
+public class $table.objectName{
+	@NotDBColumn
+	private static final long serialVersionUID = 1L;
+	
+	#foreach( $method in $table.methods )
+@Column(name = "${method.column}")
+	@SCFMember
+	private $method.type $method.propertie;
+	
+	#end
+
+	#foreach( $method in $table.methods )
+public void set${method.name}(${method.type} ${method.propertie}){
+		this.$method.propertie = $method.propertie;
+	}
+	public $method.type get${method.name}(){
+		return this.$method.propertie;
+	}
+	#end
+
+}

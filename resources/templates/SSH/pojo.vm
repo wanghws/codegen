@@ -1,0 +1,33 @@
+package ${table.packages}.${table.lowTableName}.pojo;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="${table.varObjName}")
+public class $table.objectName implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	#foreach( $method in $table.methods )
+@Column
+	private $method.type $method.propertie;
+	#end
+
+	#foreach( $method in $table.methods )
+public void set${method.name}(${method.type} ${method.propertie}){
+		this.$method.propertie = $method.propertie;
+	}
+	public $method.type get${method.name}(){
+		return this.$method.propertie;
+	}
+	#end
+	
+}

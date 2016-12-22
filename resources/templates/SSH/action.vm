@@ -1,0 +1,119 @@
+package ${table.packages}.${table.lowTableName}.action;
+
+import javax.annotation.Resource;
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
+import ${table.packages}.${table.lowTableName}.pojo.${table.objectName};
+import ${table.packages}.${table.lowTableName}.service.${table.objectName}Service;
+import ${table.packages}.utils.Message;
+import ${table.packages}.utils.Page;
+import ${table.packages}.utils.Tools;
+
+@Controller("${table.varObjName}Action")
+@Scope("prototype")
+public class ${table.objectName}Action extends ActionSupport implements ModelDriven<${table.objectName}>{
+	private static final long serialVersionUID = 1L;
+	Logger log = Logger.getLogger(this.getClass());
+	
+	@Resource
+	private ${table.objectName}Service ${table.varObjName}Service;
+	
+	private ${table.objectName} ${table.varObjName} = new ${table.objectName}();
+
+	public ${table.objectName} getModel(){
+		return ${table.varObjName};
+	}
+	
+	public ${table.objectName}Service get${table.objectName}Service() {
+		return ${table.varObjName}Service;
+	}
+
+	public void set${table.objectName}Service(${table.objectName}Service ${table.varObjName}Service) {
+		this.${table.varObjName}Service = ${table.varObjName}Service;
+	}
+	public HttpServletRequest getRequest(){
+		return ServletActionContext.getRequest();
+	}
+	public String list(){
+		try{
+			int cur = Tools.getIntegerParameter(getRequest(), "cur", 0);
+			int count = get${table.objectName}Service().query${table.objectName}Count(getModel());
+			Page page = new Page(cur,count,Message.RECODE_LIMIT);
+			page.setRequest(getRequest());
+			getRequest().setAttribute("list", get${table.objectName}Service().query${table.objectName}List(getModel(), page.getStartRow(), page.getRows()));
+			page.setRequestURI("/${table.varObjName}/list");
+			getRequest().setAttribute("page",page);
+		}catch(Exception e){
+			log.error(e.getMessage(), e);
+			getRequest().setAttribute("message",Message.SYSTEM_EXCEPTION);
+			return "exception";
+		}
+		return "list";
+	}
+	public String add(){
+		return "add";
+	}
+	public String save(){
+		try{
+			get${table.objectName}Service().save${table.objectName}(getModel());
+		}catch(Exception e){
+			log.error(e.getMessage(), e);
+			getRequest().setAttribute("message",Message.SYSTEM_EXCEPTION);
+			return "exception";
+		}
+		getRequest().setAttribute("url", "/${table.varObjName}/list");
+		return "success";
+	}
+	public String display(){
+		try{
+			${table.objectName} ${table.varObjName} = get${table.objectName}Service().find${table.objectName}ById(getModel().getId());
+			if(null==${table.varObjName}){
+				getRequest().setAttribute("message",Message.RECODE_NOT_EXIST);
+				return "exception";
+			}
+			getRequest().setAttribute("${table.varObjName}", ${table.varObjName});
+		}catch(Exception e){
+			log.error(e.getMessage(), e);
+			getRequest().setAttribute("message",Message.SYSTEM_EXCEPTION);
+			return "exception";
+		}
+		return "modify";
+	}
+	public String modify(){
+		try{
+			${table.objectName} ${table.varObjName} = get${table.objectName}Service().find${table.objectName}ById(getModel().getId());
+			if(null==${table.varObjName}){
+				getRequest().setAttribute("message",Message.RECODE_NOT_EXIST);
+				return "exception";
+			}
+			get${table.objectName}Service().update${table.objectName}(getModel());
+		}catch(Exception e){
+			log.error(e.getMessage(), e);
+			getRequest().setAttribute("message",Message.SYSTEM_EXCEPTION);
+			return "exception";
+		}
+		getRequest().setAttribute("url", "/${table.varObjName}/list");
+		return "success";
+	}
+	public String delete(){
+		try{
+			${table.objectName} ${table.varObjName} = get${table.objectName}Service().find${table.objectName}ById(getModel().getId());
+			if(null==${table.varObjName}){
+				getRequest().setAttribute("message",Message.RECODE_NOT_EXIST);
+				return "exception";
+			}
+			get${table.objectName}Service().delete${table.objectName}(getModel());
+		}catch(Exception e){
+			log.error(e.getMessage(), e);
+			getRequest().setAttribute("message",Message.SYSTEM_EXCEPTION);
+			return "exception";
+		}
+		getRequest().setAttribute("url", "/${table.varObjName}/list");
+		return "success";
+	}
+}

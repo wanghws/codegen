@@ -1,0 +1,41 @@
+package ${table.packages}.${table.lowTableName}.service;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+import ${table.packages}.${table.lowTableName}.dao.${table.objectName}Dao;
+import ${table.packages}.${table.lowTableName}.pojo.${table.objectName};
+
+@Service
+public class ${table.objectName}Service {
+	@Resource
+	private ${table.objectName}Dao ${table.varObjName}Dao;
+	
+	public ${table.objectName}Dao get${table.objectName}Dao() {
+		return ${table.varObjName}Dao;
+	}
+	public void set${table.objectName}Dao(${table.objectName}Dao ${table.varObjName}Dao) {
+		this.${table.varObjName}Dao = ${table.varObjName}Dao;
+	}
+	public ${table.objectName} find${table.objectName}ById(Long id)throws Exception{
+		return get${table.objectName}Dao().find${table.objectName}ById(id);
+	}
+	public void save${table.objectName}(${table.objectName} ${table.varObjName})throws Exception{
+		get${table.objectName}Dao().save${table.objectName}(${table.varObjName});
+	}
+	public void update${table.objectName}(${table.objectName} ${table.varObjName})throws Exception{
+		get${table.objectName}Dao().update${table.objectName}(${table.varObjName});
+	}
+	public void delete${table.objectName}(${table.objectName} ${table.varObjName})throws Exception{
+		get${table.objectName}Dao().delete${table.objectName}(${table.varObjName});
+	}
+	
+	public Integer query${table.objectName}Count(${table.objectName} ${table.varObjName})throws Exception{
+		return get${table.objectName}Dao().query${table.objectName}Count(${table.varObjName});
+	}
+	public List<${table.objectName}> query${table.objectName}List(${table.objectName} ${table.varObjName},int offset,int limit)throws Exception{
+		return get${table.objectName}Dao().query${table.objectName}List(${table.varObjName}, offset, limit);
+	}
+}

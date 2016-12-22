@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="${table.varObjName}" namespace="/${table.varObjName}"  extends="struts-default">
+		<global-results>
+            <result name="success">/WEB-INF/common/success.jsp</result>
+            <result name="exception">/WEB-INF/common/exception.jsp</result>
+        </global-results>
+		<action name="*" method="{1}" class="${table.varObjName}Action" >
+			<result name="list">/WEB-INF/${table.varObjName}/list.jsp</result>
+			<result name="add">/WEB-INF/${table.varObjName}/add.jsp</result>
+			<result name="modify">/WEB-INF/${table.varObjName}/modify.jsp</result>
+		</action>
+	</package>
+</struts>

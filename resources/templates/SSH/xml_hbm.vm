@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="${table.packages}.pojo.$table.objectName" table="${table.tableName}">
+	<id column="id" name="id" type="long">
+		<generator class="native"/>
+	</id>
+	#foreach( $method in $table.methods )
+	#if($method.propertie!='id')
+	
+	<property column="${method.column}" length="${method.size}" name="${method.propertie}" type="${method.lowerType}"/>
+	#end
+	#end
+	
+</class>
+</hibernate-mapping>

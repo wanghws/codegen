@@ -1,0 +1,61 @@
+package ${table.packages}.${table.lowTableName}.dao;
+
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+import ${table.packages}.${table.lowTableName}.pojo.${table.objectName};
+
+@Repository
+public class ${table.objectName}Dao extends HibernateDaoSupport{
+	
+	public ${table.objectName} find${table.objectName}ById(Long id)throws Exception{
+		return (${table.objectName})getHibernateTemplate().get(${table.objectName}.class, id);
+	}
+	public void save${table.objectName}(${table.objectName} ${table.varObjName})throws Exception{
+		getHibernateTemplate().save(${table.varObjName});
+	}
+	public void update${table.objectName}(${table.objectName} ${table.varObjName})throws Exception{
+		getHibernateTemplate().update(${table.varObjName});
+	}
+	public void delete${table.objectName}(${table.objectName} ${table.varObjName})throws Exception{
+		getHibernateTemplate().delete(${table.varObjName});
+	}
+	
+	public Integer query${table.objectName}Count(${table.objectName} ${table.varObjName})throws Exception{
+		String query = "select count(*) from ${table.objectName} where 1=1";
+		//
+		final String sql = query;
+		return ((Long)getHibernateTemplate().execute(
+				new HibernateCallback(){
+					public Object doInHibernate(Session session) throws HibernateException{
+						Query q = session.createQuery(sql);
+						q.setMaxResults(1);
+						return q.uniqueResult();
+					}
+				 })).intValue();
+	}
+	
+	public List<${table.objectName}> query${table.objectName}List(${table.objectName} ${table.varObjName},final int offset,final int limit)throws Exception{
+		String query = "from ${table.objectName} where 1=1";
+		//
+		query += " order by id desc";
+		final String sql = query;
+		return (List<${table.objectName}>)getHibernateTemplate().execute(
+				new HibernateCallback(){
+					public Object doInHibernate(Session session) throws HibernateException{
+						Query q = session.createQuery(sql);
+						q.setFirstResult(offset);
+						q.setMaxResults(limit);
+						return q.list();
+					}
+				 });
+	}
+
+}

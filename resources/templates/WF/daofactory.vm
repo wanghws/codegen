@@ -1,0 +1,10 @@
+package ${table.packages}.${table.varObjName}.dao;
+
+public class ${table.objectName}DaoFactory {
+	
+	private static ${table.objectName}Dao ${table.varObjName}Dao = new ${table.objectName}Dao();
+	
+	public static ${table.objectName}Dao get${table.objectName}Dao(){
+		return ${table.varObjName}Dao;
+	}
+}

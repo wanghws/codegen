@@ -1,0 +1,37 @@
+package ${table.packages}.${table.varObjName}.dao;
+
+import ${table.packages}.core.dal.PrimaryKeyGen;
+import ${table.packages}.${table.varObjName}.bean.$table.objectName;
+import com.bj58.wf.dal.DataAccess;
+import com.bj58.wf.dal.DataAccessFactory;
+import com.bj58.wf.dal.sql.select.ParameterContainer;
+
+public class ${table.objectName}Dao{
+	
+	public boolean insert($table.objectName ${table.varObjName})throws Exception{
+		DataAccess<$table.objectName> da = DataAccessFactory.get(${table.objectName}.class); 
+		${table.varObjName}.setId(PrimaryKeyGen.getUniqueString());
+		return da.add(${table.varObjName});
+	}
+	
+	public boolean update($table.objectName ${table.varObjName})throws Exception{
+		DataAccess<$table.objectName> da = DataAccessFactory.get(${table.objectName}.class); 
+		return da.save(${table.varObjName}, new String[]{
+		#set($count=0)
+#foreach( $method in $table.methods )
+#set($count = $count+1)
+#if($count==1) "${method.name}" #else ,"${method.name}" #end
+#end
+});
+	}
+	
+	public boolean delete(String id)throws Exception{
+		DataAccess<$table.objectName> da = DataAccessFactory.get(${table.objectName}.class);
+		$table.objectName ${table.varObjName} = this.get(id);
+		return da.delete(${table.varObjName});
+	}
+	
+	public boolean get(String id)throws Exception{
+		return DataAccessFactory.get(${table.objectName}.class).get(id);
+	}
+}
